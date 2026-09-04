@@ -7,10 +7,10 @@ from file_tools import (
     rename_with_prefix,
     backup_folder2,
 )
-
 from stock_tools import (
     get_stock_info,
-    check_price_alert
+    check_price_alert,
+    save_stock_history
 )
 
 parser = argparse.ArgumentParser(description="檔案管理工具")
@@ -61,6 +61,7 @@ elif args.command == "stock_info":
     print(f"前一日收盤價: {stock_info['previousClose']}")
     print(f"價格變動: {stock_info['change']}")
     print(f"價格變動百分比: {stock_info['changePercent']:.2f}%")
+    save_stock_history(args.ticker, stock_info['currentPrice'])
 elif args.command == "alert":
     result = check_price_alert(args.ticker, args.threshold, args.direction)
     if result:
